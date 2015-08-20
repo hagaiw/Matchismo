@@ -17,7 +17,10 @@
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
 @property (nonatomic, readonly) NSInteger score;
-@property (nonatomic, readonly) NSString *status;
 @property (nonatomic) NSInteger numMatches;
+
+@property (nonatomic, readonly) NSArray *lastCards;
+@property (nonatomic, readonly) NSUInteger lastMatching;
+@property (nonatomic, readonly) NSInteger lastScore;
 
 @end

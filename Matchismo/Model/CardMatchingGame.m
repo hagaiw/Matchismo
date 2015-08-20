@@ -12,9 +12,17 @@
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray *cards; //of cards
 @property (nonatomic) NSInteger selectedCards;
-@property (nonatomic, readwrite) NSString *status;
+
+
+@property (nonatomic, readwrite) NSMutableArray *lastCards;
+@property (nonatomic, readwrite) NSUInteger lastMatching;
+@property (nonatomic, readwrite) NSInteger lastScore;
+
 @end
 
+
+
+// implements a generic card game
 @implementation CardMatchingGame
 
 - (NSMutableArray *) cards
@@ -37,7 +45,6 @@
                 self = nil;
                 break;
             }
-
         }
     }
     return self;
@@ -54,12 +61,12 @@ static const int COST_TO_CHOOSE = 1;
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];
+    self.lastScore = 0;
     
     if(!card.isMatched){
         if(card.isChosen){
             _selectedCards--;
             card.chosen = NO;
-            self.status = [@"Unchose the card: " stringByAppendingString:card.contents];
         } else {
             card.chosen = YES;
             _selectedCards++;
@@ -79,39 +86,36 @@ static const int COST_TO_CHOOSE = 1;
                 for (int i1 = 0; i1 < [chosenCardsArray count]; i1++){
                     for (int i2 = i1+1; i2 < [chosenCardsArray count]; i2++){
                         int matchScore = [chosenCardsArray[i1] match:@[chosenCardsArray[i2]]];
-                        NSLog(@"match score: %d, i1:%d, i2:%d", matchScore, i1, i2);
                         if (matchScore){
                             tempScore += matchScore;
                         }
                     }
                 }
                 
-                self.status = @"";
+                self.lastCards = chosenCardsArray;
+                
                 if (tempScore){
-                    self.status = @"Matched the cards: ";
+                    self.lastMatching = 1;
                     for (Card *chosenCard in chosenCardsArray) {
                         chosenCard.matched = YES;
-                        self.status = [self.status stringByAppendingString:chosenCard.contents];
-                        self.status = [self.status stringByAppendingString:@" "];
                     }
-                    self.score += tempScore * MATCH_BONUS;
+                    self.lastScore += tempScore * MATCH_BONUS;
                 } else {
-                    self.status = @"Following cards did not match: ";
+                    self.lastMatching = 0;
                     for (Card *chosenCard in chosenCardsArray) {
                         chosenCard.chosen = NO;
-                        self.status = [self.status stringByAppendingString:chosenCard.contents];
-                        self.status = [self.status stringByAppendingString:@" "];
                     }
-                    self.score -= MISMATCH_PENALTY;
+                    self.lastScore -= MISMATCH_PENALTY;
                 }
             }
             else{
-                self.status = [@"Chose the card: " stringByAppendingString:card.contents];
+                self.lastMatching = 2;
+                self.lastCards = @[card];
             }
-            self.score -= COST_TO_CHOOSE;
-
+            self.lastScore -= COST_TO_CHOOSE;
         }
     }
+    self.score += self.lastScore;
 }
 
 @end
