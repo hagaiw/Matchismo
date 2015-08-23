@@ -42,9 +42,9 @@
     return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
 }
 
-- (NSString *)getCardString:(Card *)card
+- (NSAttributedString *)getCardString:(Card *)card
 {
-    return [card contents];
+    return [[NSAttributedString alloc] initWithString:[card contents]];
 }
 
 @end

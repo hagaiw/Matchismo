@@ -15,4 +15,6 @@
 @property (nonatomic) NSUInteger alpha;
 @property (nonatomic) NSUInteger shape;
 
+
+
 @end

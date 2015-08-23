@@ -9,6 +9,9 @@
 #import "ViewController.h"
 #import "Deck.h"
 #import "CardMatchingGame.h"
+#import "HistoryViewController.h"
+
+
 
 @interface ViewController ()
 
@@ -17,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *matchNumButton;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
+@property (strong, nonatomic) NSMutableArray *statusHistoryArray;
+
 @end
 
 @implementation ViewController
@@ -32,6 +38,14 @@
     self.game.numMatches = sender.selectedSegmentIndex + 2;
 }
 
+- (NSMutableArray *)statusHistoryArray
+{
+    if(!_statusHistoryArray) {
+        _statusHistoryArray = [[NSMutableArray alloc] init];
+    }
+    return _statusHistoryArray;
+}
+
 
 - (CardMatchingGame *)game
 {
@@ -45,8 +59,7 @@
     return nil;
 }
 
-- (IBAction)touchCardButton:(UIButton *)sender
-{
+- (IBAction)touchCardButton:(UIButton *)sender {
     self.matchNumButton.userInteractionEnabled = NO;
     NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
@@ -54,54 +67,71 @@
     
 }
 
-- (void)updateUI
-{
-    // update status:
-    
+- (void)updateUI {
+    // Update status:
     self.statusLabel.text = @"";
-    
-    
-    // a card was chosen but the ammount to match was not reached:
-    if( [self.game lastMatching] == 2){
-        self.statusLabel.text = @"Chose:  [";
+    NSMutableAttributedString *status = [self getStatusPrefix];
+    [self appendCardsToStatus:status];
+    [self updateCardsUI];
+    [self updateStatusUI:status];
+    [self.statusHistoryArray addObject:status];
+}
+
+- (NSMutableAttributedString *)getStatusPrefix {
+    NSMutableAttributedString *status;
+    // a card was chosen but the amount to match was not reached:
+    if( [self.game lastMatching] == MatchStatusTypeNone){
+        status = [[NSMutableAttributedString alloc] initWithString:@"Chose:  ["];
     }
     
     // a match occured:
-    else if( [self.game lastMatching] == 1){
-        self.statusLabel.text = @"Math for:  [";
+    else if( [self.game lastMatching] == MatchStatusTypeMatched){
+        status = [[NSMutableAttributedString alloc] initWithString:@"Match for:  ["];
     }
     
     // cards didn't match:
-    else if( [self.game lastMatching] == 0){
-        self.statusLabel.text = @"No match for:  [";
+    else if( [self.game lastMatching] == MatchStatusTypeMismatched){
+        status = [[NSMutableAttributedString alloc] initWithString:@"No match for:  ["];
     }
-    
+    return status;
+}
+
+- (void)appendCardsToStatus:(NSMutableAttributedString *)status {
     // add cards to status:
     for( Card *card in [self.game lastCards]){
-        self.statusLabel.text = [self.statusLabel.text stringByAppendingString: [self getCardString:card]];  // replace with method for card string
+        NSAttributedString *attString = [self getCardString:card];
+        [status appendAttributedString:attString];
         if( ![card isEqual:[[self.game lastCards] lastObject]]){
-            self.statusLabel.text = [self.statusLabel.text stringByAppendingString: @", "];
+            NSAttributedString *attString = [[NSAttributedString alloc] initWithString:@", "];
+            [status appendAttributedString:attString];
         }
     }
+}
+
+- (void)updateStatusUI:(NSMutableAttributedString *)status {
+    NSAttributedString *attString = [[NSAttributedString alloc]
+                                     initWithString:[NSString stringWithFormat:@"] with score: %d", (int)[self.game lastScore]]];
+    [status appendAttributedString:attString];
+    self.statusLabel.attributedText = status;
     
-    self.statusLabel.text = [self.statusLabel.text stringByAppendingString: [NSString stringWithFormat:@"] with score: %d", (int)[self.game lastScore]] ];
-    
-    
-    // update card ui:
+    // update score:
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
+}
+
+- (NSAttributedString *)getCardString:(Card *)card
+{
+    return nil;
+}
+
+
+- (void)updateCardsUI
+{
     for (UIButton *cardButton in self.cardButtons){
         NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
         cardButton.enabled = !card.isMatched;
         [self updateCardUI:card button:cardButton];
     }
-    
-    // update score:
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
-}
-
-- (NSString *)getCardString:(Card *)card
-{
-    return nil;
 }
 
 - (void)updateCardUI:(Card *)card button:(UIButton *)cardButton
@@ -110,12 +140,34 @@
 
 - (NSString *)titleForCard:(Card *)card
 {
+    assert(NO);
     return nil;
 }
 
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
     return nil;
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"History"])
+    {
+        NSMutableAttributedString *historyText = [[NSMutableAttributedString alloc] init];
+        for (NSMutableAttributedString *status in self.statusHistoryArray) {
+            [historyText appendAttributedString:status];
+            [historyText appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+        }
+        
+        NSLog([historyText string]);
+        
+        // Get reference to the destination view controller
+        HistoryViewController *historyViewController = [segue destinationViewController];
+        
+        // Pass any objects to the view controller here, like...
+        historyViewController.bodyText = historyText;
+    }
 }
 
 @end

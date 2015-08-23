@@ -23,6 +23,7 @@
 		FA8AA2911B863A4900EF03AC /* SetCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8AA2901B863A4900EF03AC /* SetCardViewController.m */; };
 		FA8AA2941B863A8300EF03AC /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8AA2931B863A8300EF03AC /* SetCard.m */; };
 		FA8AA2971B863A9800EF03AC /* SetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8AA2961B863A9800EF03AC /* SetDeck.m */; };
+		FA8AA29A1B89F55300EF03AC /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8AA2991B89F55300EF03AC /* HistoryViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,8 @@
 		FA8AA2931B863A8300EF03AC /* SetCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetCard.m; sourceTree = "<group>"; };
 		FA8AA2951B863A9800EF03AC /* SetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetDeck.h; sourceTree = "<group>"; };
 		FA8AA2961B863A9800EF03AC /* SetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetDeck.m; sourceTree = "<group>"; };
+		FA8AA2981B89F55300EF03AC /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		FA8AA2991B89F55300EF03AC /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 			children = (
 				FA8AA28C1B84D11700EF03AC /* PlayingCardViewController.h */,
 				FA8AA28D1B84D11700EF03AC /* PlayingCardViewController.m */,
+				FA8AA2981B89F55300EF03AC /* HistoryViewController.h */,
+				FA8AA2991B89F55300EF03AC /* HistoryViewController.m */,
 				FA8AA28F1B863A4900EF03AC /* SetCardViewController.h */,
 				FA8AA2901B863A4900EF03AC /* SetCardViewController.m */,
 				FA5BB5DD1B8222E100C08A0F /* ViewController.h */,
@@ -278,6 +283,7 @@
 				FA8AA27F1B8305BB00EF03AC /* PlayingCard.m in Sources */,
 				FA8AA2881B83255600EF03AC /* CardMatchingGame.m in Sources */,
 				FA8AA2941B863A8300EF03AC /* SetCard.m in Sources */,
+				FA8AA29A1B89F55300EF03AC /* HistoryViewController.m in Sources */,
 				FA8AA2851B83060200EF03AC /* PlayingCardDeck.m in Sources */,
 				FA8AA28E1B84D11700EF03AC /* PlayingCardViewController.m in Sources */,
 				FA8AA2821B8305EC00EF03AC /* Deck.m in Sources */,

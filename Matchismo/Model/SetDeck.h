@@ -10,10 +10,15 @@
 
 @interface SetDeck : Deck
 
-// previously on XCODE: was trying to decide if i want to put these properties in here or in card?
-@property (nonatomic) NSUInteger numColors;
-@property (nonatomic) NSUInteger numNumbers;
-@property (nonatomic) NSUInteger numAlpha;
-@property (nonatomic) NSUInteger numShapes;
+- (instancetype)initWithColors:(NSArray *)colors Numbers:(NSArray *)numbers Alphas:(NSArray *)alphas Shapes:(NSArray *)shapes;
+- (NSUInteger)numColors;
+- (NSUInteger)numNumbers;
+- (NSUInteger)numAlphas;
+- (NSUInteger)numShapes;
+
+@property (strong, nonatomic) NSArray *colors;
+@property (strong, nonatomic) NSArray *numbers;
+@property (strong, nonatomic) NSArray *alphas;
+@property (strong, nonatomic) NSArray *shapes;
 
 @end

@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "Deck.h"
 
+typedef NS_ENUM(NSUInteger, MatchStatusType) {
+    MatchStatusTypeMatched,
+    MatchStatusTypeMismatched,
+    MatchStatusTypeNone
+};
+
 
 @interface CardMatchingGame : NSObject
 

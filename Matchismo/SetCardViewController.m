@@ -7,31 +7,65 @@
 //
 
 #import "SetCardViewController.h"
+#import "SetDeck.h"
 #import "SetCard.h"
+#import "CardMatchingGame.h"
 
 @interface SetCardViewController ()
-
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet SetDeck *deck;
 @end
 
 @implementation SetCardViewController
 
-- (NSString *)getCardString:(Card *)card
+- (Deck *)createDeck
 {
-    return nil;
+    NSArray *colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor]];
+    NSArray *numbers = @[@1, @2, @3];
+    NSArray *alphas = @[@0, [NSNumber numberWithFloat:0.3f], @1];
+    NSArray *shapes = @[@"▲", @"●", @"■"];
+    _deck = [[SetDeck alloc] initWithColors:colors Numbers:numbers Alphas:alphas Shapes:shapes];
+    return _deck;
+}
+
+- (NSAttributedString *)getCardString:(Card *)card
+{
+    return [[NSAttributedString alloc] initWithString:@"temp"];
+}
+
+
+- (NSMutableAttributedString *)titleForCard:(Card *)card
+{
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
+    
+    SetCard *setCard = (SetCard *)card;
+
+    for( NSUInteger i = 0; i <= setCard.number; i++) {
+        NSString *shapeString = _deck.shapes[setCard.shape];
+        [title appendAttributedString:[[NSAttributedString alloc] initWithString:shapeString ]];
+        
+        UIColor *color = _deck.colors[setCard.color];
+        [title addAttribute:NSStrokeColorAttributeName value:color range:NSMakeRange(0, title.length)];
+        NSNumber *alpha = _deck.alphas[setCard.alpha];
+        color = [color colorWithAlphaComponent: [alpha floatValue]];
+        [title addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, title.length)];
+        [title addAttribute:NSStrokeWidthAttributeName value:@-3 range:NSMakeRange(0, title.length)];
+        
+    }
+    return title;
 }
 
 - (void)updateCardUI:(Card *)card button:(UIButton *)cardButton
 {
-}
-
-- (NSString *)titleForCard:(Card *)card
-{
-    return nil;
+    [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
+    [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
 }
 
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
-    return nil;
+    return [UIImage imageNamed:@"cardfront"];
 }
 
 @end
