@@ -20,6 +20,7 @@
 
 @implementation SetCardViewController
 
+
 - (Deck *)createDeck
 {
     NSArray *colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor]];
@@ -32,16 +33,10 @@
 
 - (NSAttributedString *)getCardString:(Card *)card
 {
-    return [[NSAttributedString alloc] initWithString:@"temp"];
-}
-
-
-- (NSMutableAttributedString *)titleForCard:(Card *)card
-{
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
     
     SetCard *setCard = (SetCard *)card;
-
+    
     for( NSUInteger i = 0; i <= setCard.number; i++) {
         NSString *shapeString = _deck.shapes[setCard.shape];
         [title appendAttributedString:[[NSAttributedString alloc] initWithString:shapeString ]];
@@ -59,7 +54,7 @@
 
 - (void)updateCardUI:(Card *)card button:(UIButton *)cardButton
 {
-    [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
+    [cardButton setAttributedTitle:[self getCardString:card] forState:UIControlStateNormal];
     [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
 }
 
@@ -67,5 +62,8 @@
 {
     return [UIImage imageNamed:@"cardfront"];
 }
+
+
+
 
 @end

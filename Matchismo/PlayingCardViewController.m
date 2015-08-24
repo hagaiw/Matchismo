@@ -27,15 +27,10 @@
 
 - (void)updateCardUI:(Card *)card button:(UIButton *)cardButton
 {
-    [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+    [cardButton setAttributedTitle:[self getCardString:card] forState:UIControlStateNormal];
     [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
 }
 
-
-- (NSString *)titleForCard:(Card *)card
-{
-    return card.isChosen ? card.contents : @"";
-}
 
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
@@ -44,7 +39,7 @@
 
 - (NSAttributedString *)getCardString:(Card *)card
 {
-    return [[NSAttributedString alloc] initWithString:[card contents]];
+    return [[NSAttributedString alloc] initWithString:(card.isChosen ? card.contents : @"")];
 }
 
 @end

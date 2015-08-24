@@ -19,28 +19,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Matchismo/ViewController.m"
-            timestampString = "462032147.510533"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "-updateUI"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Matchismo/SetCardViewController.m"
-            timestampString = "462037621.779157"
+            timestampString = "462095569.597522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "-updateCardUI:button:"
             landmarkType = "5">
          </BreakpointContent>
@@ -83,13 +67,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Matchismo/SetCardViewController.m"
-            timestampString = "462037710.769335"
+            filePath = "Matchismo/ViewController.m"
+            timestampString = "462094698.609898"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "-titleForCard:"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "-redealButton:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -99,13 +83,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Matchismo/SetCardViewController.m"
-            timestampString = "462037626.829858"
+            filePath = "Matchismo/ViewController.m"
+            timestampString = "462094997.160762"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "-titleForCard:"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "-redealButton:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

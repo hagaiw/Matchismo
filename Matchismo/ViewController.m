@@ -30,6 +30,8 @@
 - (IBAction)redealButton:(UIButton *)sender {
     self.matchNumButton.userInteractionEnabled = YES;
     _game = nil;
+    _game = self.game;
+    _statusHistoryArray = nil;
     [self updateUI];
 }
 
@@ -49,7 +51,7 @@
 
 - (CardMatchingGame *)game
 {
-    if(!_game) _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
+    if(!_game) _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] numMatches:3];
     return _game;
 }
 
@@ -70,11 +72,13 @@
 - (void)updateUI {
     // Update status:
     self.statusLabel.text = @"";
-    NSMutableAttributedString *status = [self getStatusPrefix];
-    [self appendCardsToStatus:status];
+    if([self.game.lastCards count] > 0) {
+        NSMutableAttributedString *status = [self getStatusPrefix];
+        [self appendCardsToStatus:status];
+        [self updateStatusUI:status];
+        [self.statusHistoryArray addObject:status];
+    }
     [self updateCardsUI];
-    [self updateStatusUI:status];
-    [self.statusHistoryArray addObject:status];
 }
 
 - (NSMutableAttributedString *)getStatusPrefix {
@@ -138,12 +142,6 @@
 {
 }
 
-- (NSString *)titleForCard:(Card *)card
-{
-    assert(NO);
-    return nil;
-}
-
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
     return nil;
@@ -160,14 +158,16 @@
             [historyText appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         }
         
-        NSLog([historyText string]);
-        
         // Get reference to the destination view controller
         HistoryViewController *historyViewController = [segue destinationViewController];
         
         // Pass any objects to the view controller here, like...
         historyViewController.bodyText = historyText;
     }
+}
+
+- (void)viewDidLoad {
+    [self updateUI];
 }
 
 @end

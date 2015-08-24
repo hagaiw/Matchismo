@@ -32,10 +32,10 @@
     return _cards;
 }
 
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck numMatches:(int)numMatchesRequired
 {
     self.score = 0;
-    self.numMatches = 2;
+    self.numMatches = numMatchesRequired;
     self = [super init];
     if(self){
         for (int i = 0; i < count; i++){
@@ -83,24 +83,16 @@ static const int COST_TO_CHOOSE = 1;
                     }
                 }
                 
-                int tempScore = 0;
-                for (int i1 = 0; i1 < [chosenCardsArray count]; i1++){
-                    for (int i2 = i1+1; i2 < [chosenCardsArray count]; i2++){
-                        int matchScore = [chosenCardsArray[i1] match:@[chosenCardsArray[i2]]];
-                        if (matchScore){
-                            tempScore += matchScore;
-                        }
-                    }
-                }
                 
+                int matchScore = [card match:chosenCardsArray];
                 self.lastCards = chosenCardsArray;
                 
-                if (tempScore){
+                if (matchScore){
                     self.lastMatching = MatchStatusTypeMatched;
                     for (Card *chosenCard in chosenCardsArray) {
                         chosenCard.matched = YES;
                     }
-                    self.lastScore += tempScore * MATCH_BONUS;
+                    self.lastScore += matchScore * MATCH_BONUS;
                 } else {
                     self.lastMatching = MatchStatusTypeMismatched;
                     for (Card *chosenCard in chosenCardsArray) {

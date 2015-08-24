@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, MatchStatusType) {
 @interface CardMatchingGame : NSObject
 
 // designated iniitalizer
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck;
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck  numMatches:(int)numMatchesRequired;
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
 @property (nonatomic, readonly) NSInteger score;
